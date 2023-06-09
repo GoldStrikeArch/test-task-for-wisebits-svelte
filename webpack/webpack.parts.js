@@ -2,6 +2,7 @@ const path = require("path");
 const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
 const { WebpackPluginServe } = require("webpack-plugin-serve");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const preprocess = require("svelte-preprocess");
 
@@ -10,6 +11,31 @@ exports.typescript = () => ({
     rules: [{ test: /\.ts$/, use: "ts-loader", exclude: /node_modules/ }],
   },
 });
+
+exports.extractCSS = ({ options = {}, loaders = [] } = {}) => {
+  return {
+    module: {
+      rules: [
+        {
+          test: /.(le|c)ss$/i,
+          use: [
+            { loader: MiniCssExtractPlugin.loader, options },
+            "css-loader",
+            {
+              loader: "less-loader",
+            },
+          ].concat(loaders),
+          sideEffects: true,
+        },
+      ],
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "[name].css",
+      }),
+    ],
+  };
+};
 
 exports.devServer = () => ({
   watch: true,

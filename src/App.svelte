@@ -5,7 +5,10 @@
 <div>lala {a}</div>
 
 <style lang="less">
+  @width: 100px;
+
   div {
-    width: 100px;
+    width: @width;
+    border: 1px solid red;
   }
 </style>
