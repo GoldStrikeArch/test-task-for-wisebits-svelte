@@ -1,14 +1,5 @@
 <script lang="ts">
-  let a = 1;
+  import Card from "./Card.svelte";
 </script>
 
-<div>lala {a}</div>
-
-<style lang="less">
-  @width: 100px;
-
-  div {
-    width: @width;
-    border: 1px solid red;
-  }
-</style>
+<Card />
