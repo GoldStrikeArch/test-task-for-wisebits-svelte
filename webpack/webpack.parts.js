@@ -12,19 +12,19 @@ exports.typescript = () => ({
   },
 });
 
-exports.extractCSS = ({ options = {}, loaders = [] } = {}) => {
+exports.extractCSS = () => {
   return {
     module: {
       rules: [
         {
           test: /.(le|c)ss$/i,
           use: [
-            { loader: MiniCssExtractPlugin.loader, options },
+            { loader: MiniCssExtractPlugin.loader },
             "css-loader",
             {
               loader: "less-loader",
             },
-          ].concat(loaders),
+          ],
           sideEffects: true,
         },
       ],
@@ -52,8 +52,6 @@ exports.page = ({ title }) => ({
   plugins: [new MiniHtmlWebpackPlugin({ publicPath: "/", context: { title } })],
 });
 
-exports.generateSourceMaps = ({ type }) => ({ devtool: type });
-
 exports.svelte = (mode) => {
   const prod = mode === "production";
 
@@ -79,7 +77,7 @@ exports.svelte = (mode) => {
               emitCss: prod,
               hotReload: !prod,
               preprocess: preprocess({
-                postcss: true,
+                // postcss: true,
                 less: true,
               }),
             },
